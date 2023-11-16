@@ -9,23 +9,33 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Product.belongsToMany(models.Order, { through: "Order_Product" });
-      Product.belongsToMany(models.Color, { through: "Color_Product" });
+      Product.belongsTo(models.Category);
+      Product.belongsTo(models.Category, {
+        foreignKey: "CategoryId",
+      });
       Product.hasMany(models.Price);
+      Product.hasMany(models.Price, {
+        foreignKey: "ProductId",
+      });
+      Product.belongsToMany(models.Color, { through: "Color_Product" });
+      Product.hasMany(models.Color_Product, { foreignKey: "ProductId" });
+      Product.belongsToMany(models.Order, { through: "Order_Product" });
+      Product.hasMany(models.Order_Product, { foreignKey: "ProductId" });
     }
   }
   Product.init(
     {
       name: DataTypes.STRING,
       image: DataTypes.STRING,
-      description: DataTypes.TEXT,
-      sim: DataTypes.STRING,
       screen: DataTypes.STRING,
-      cpu: DataTypes.STRING,
+      resolution: DataTypes.STRING,
       rear_camera: DataTypes.STRING,
       front_camera: DataTypes.STRING,
-      speaker: DataTypes.STRING,
+      cpu: DataTypes.STRING,
       pin: DataTypes.STRING,
+      sim: DataTypes.STRING,
+      price_base: DataTypes.FLOAT,
+      description: DataTypes.TEXT,
       CategoryId: DataTypes.INTEGER,
     },
     {

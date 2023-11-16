@@ -10,16 +10,20 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Price.belongsTo(models.Product);
-      Price.belongsTo(models.Ram);
+      Price.belongsTo(models.Product, {
+        foreignKey: "ProductId",
+      });
       Price.belongsTo(models.Storage);
+      Price.belongsTo(models.Storage, {
+        foreignKey: "StorageId",
+      });
     }
   }
   Price.init(
     {
-      RamId: DataTypes.INTEGER,
       StorageId: DataTypes.INTEGER,
       ProductId: DataTypes.INTEGER,
-      price: DataTypes.FLOAT,
+      price_product: DataTypes.FLOAT,
     },
     {
       sequelize,

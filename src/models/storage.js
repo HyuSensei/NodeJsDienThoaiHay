@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Storage.belongsTo(models.Price);
+      Storage.hasMany(models.Price);
+      Storage.hasMany(models.Price, {
+        foreignKey: "StorageId",
+      });
     }
   }
   Storage.init(

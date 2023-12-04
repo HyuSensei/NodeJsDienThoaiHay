@@ -342,10 +342,56 @@ const getOrderCancel = async (req, res) => {
   }
 };
 
+const handleCancelOrder = async (req, res) => {
+  try {
+    let order_id = req.params.order_id;
+    await db.Order.update(
+      {
+        status: 3,
+      },
+      {
+        where: {
+          id: order_id,
+        },
+      }
+    );
+    return res.status(200).json({
+      success: true,
+      message: "Hủy đơn hàng thành công !",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const handleUpdateConfirm = async (req, res) => {
+  try {
+    let order_id = req.params.order_id;
+    await db.Order.update(
+      {
+        status: 2,
+      },
+      {
+        where: {
+          id: order_id,
+        },
+      }
+    );
+    return res.status(200).json({
+      success: true,
+      message: "Xác nhận đã nhận đơn hàng thành công !",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   addOrder,
   getOrderWait,
   getOrderShip,
   getOrderComplete,
   getOrderCancel,
+  handleCancelOrder,
+  handleUpdateConfirm,
 };

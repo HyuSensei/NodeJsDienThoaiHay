@@ -90,7 +90,7 @@ const handleConfirmOrder = async (req, res) => {
     let userId = req.cookies.UserId;
     let orderId = req.params.order_id;
     let data = await axios.get(
-      process.env.BASE_URL + `actionConfirmOrder/${orderId}`
+      process.env.BASE_URL + `handleConfirmOrder/${orderId}`
     );
     if (data.data.success === true) {
       return res.redirect(`/orderShip/${userId}`);

@@ -39,9 +39,6 @@ module.exports = {
       price_base: {
         type: Sequelize.FLOAT,
       },
-      description: {
-        type: Sequelize.TEXT,
-      },
       CategoryId: {
         type: Sequelize.INTEGER,
       },

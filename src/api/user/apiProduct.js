@@ -5,7 +5,8 @@ const getProductHome = async (req, res) => {
   try {
     const product = await axios.get(process.env.BASE_URL + `products/home`);
     res.render("user/home.ejs", {
-      product: product.data.product,
+      product_ip: product.data.product_ip,
+      product_xiao: product.data.product_xiao,
     });
   } catch (error) {
     console.log(error);

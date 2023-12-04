@@ -125,15 +125,6 @@ const login = async (req, res) => {
   }
 };
 
-const logout = (req, res) => {
-  let jwt = req.cookies.jwt;
-  res.cookie("jwt", "", { maxAge: 0 });
-  res.status(200).json({
-    success: true,
-    message: "Đăng xuất thành công !",
-  });
-};
-
 const authLogin = async (req, res) => {
   try {
     let token = req.params.token;
@@ -147,10 +138,12 @@ const authLogin = async (req, res) => {
     let user = await db.User.findOne({
       where: { id: id },
     });
-    return res.status(200).json({
-      success: true,
-      message: "Xác thực đăng nhập thành công !",
-    });
+    if (user) {
+      return res.status(200).json({
+        success: true,
+        message: "Xác thực đăng nhập thành công !",
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -159,6 +152,5 @@ const authLogin = async (req, res) => {
 module.exports = {
   register,
   login,
-  logout,
   authLogin,
 };

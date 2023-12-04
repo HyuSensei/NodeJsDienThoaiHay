@@ -3,13 +3,19 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const routeAPIUser = require("./routes/api/user");
+const routeAPIAdmin = require("./routes/api/admin");
 const routeWebUser = require("./routes/web/user");
+const routeWebAdmin = require("./routes/web/admin");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const configViewEngine = require("./config/viewEngine");
 const connection = require("./config/connectDB");
 const session = require("express-session");
 const flash = require("express-flash");
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   session({
@@ -58,7 +64,9 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/v1", routeAPIUser);
+app.use("/api/v1/admin", routeAPIAdmin);
 app.use("/", routeWebUser);
+app.use("/admin", routeWebAdmin);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

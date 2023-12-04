@@ -4,13 +4,12 @@ const router = express.Router();
 const productController = require("../../controllers/user/productController");
 const authController = require("../../controllers/user/authController");
 const orderController = require("../../controllers/user/orderController");
-const middleware = require("../../middleware/JWT");
+const categoryController = require("../../controllers/user/categoryController");
 
 router.get("/products/home", productController.getProductHome);
 
 router.post("/register", authController.register);
 router.post("/login", authController.login);
-router.get("/logout", authController.logout);
 router.get("/authenticate/:token", authController.authLogin);
 
 router.post("/order", orderController.addOrder);
@@ -18,11 +17,23 @@ router.get("/orderWait/:user_id", orderController.getOrderWait);
 router.get("/orderShip/:user_id", orderController.getOrderShip);
 router.get("/orderComplete/:user_id", orderController.getOrderComplete);
 router.get("/orderCancel/:user_id", orderController.getOrderCancel);
+router.get("/actionCancelOrder/:order_id", orderController.handleCancelOrder);
+router.get(
+  "/handleConfirmOrder/:order_id",
+  orderController.handleUpdateConfirm
+);
 
 router.get("/products/detail/:id", productController.getProductDetail);
 router.get(
   "/products/detail/:id/:storage_id",
   productController.getProductDetailCart
 );
+
+router.get(
+  "/products/search/:product_name",
+  productController.getProductSearch
+);
+
+router.get("/categories/:category_id", categoryController.getProductCategory);
 
 module.exports = router;

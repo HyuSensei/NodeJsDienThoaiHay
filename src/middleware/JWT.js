@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const apiAuth = require("../api/user/apiAuth");
+const axios = require("axios");
 require("dotenv").config();
 
 const createJWT = (payload) => {
@@ -50,11 +51,43 @@ const checkRequireLogin = async (req, res, next) => {
     if (check.detail) {
       return res.render("user/login.ejs", { erro: erro });
     }
-    if (check.success == true) {
-      next();
-    }
+    next();
   } else {
     return res.render("user/login.ejs", { erro: erro });
+  }
+};
+
+const checkLoginAdmin = async (req, res) => {
+  let cookie = req.cookies;
+  let erro = req.flash("erro");
+  if (cookie && cookie.tokenAdmin) {
+    const authData = await axios.get(
+      process.env.BASE_URL + `admin/authenticate/${cookie.tokenAdmin}`
+    );
+    if (authData.data.success === true) {
+      return res.redirect("/admin/dashboard");
+    } else {
+      return res.render("admin/login.ejs", { erro: erro });
+    }
+  } else {
+    return res.render("admin/login.ejs", { erro: erro });
+  }
+};
+
+const checkRequireLoginAdmin = async (req, res, next) => {
+  let cookie = req.cookies;
+  let erro = req.flash("erro");
+  if (cookie && cookie.tokenAdmin) {
+    const authData = await axios.get(
+      process.env.BASE_URL + `admin/authenticate/${cookie.tokenAdmin}`
+    );
+    if (authData.data.success === true) {
+      next();
+    } else {
+      return res.render("admin/login.ejs", { erro: erro });
+    }
+  } else {
+    return res.render("admin/login.ejs", { erro: erro });
   }
 };
 
@@ -63,4 +96,6 @@ module.exports = {
   verifyToken,
   checkAuth,
   checkRequireLogin,
+  checkLoginAdmin,
+  checkRequireLoginAdmin,
 };

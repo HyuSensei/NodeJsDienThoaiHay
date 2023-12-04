@@ -9,15 +9,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Product.belongsTo(models.Category);
+      // Product.belongsTo(models.Category);
       Product.belongsTo(models.Category, {
         foreignKey: "CategoryId",
       });
-      Product.hasMany(models.Price);
+      // Product.hasMany(models.Price);
       Product.hasMany(models.Price, {
         foreignKey: "ProductId",
       });
-      Product.belongsToMany(models.Color, { through: "Color_Product" });
+      Product.belongsToMany(models.Color, {
+        through: "Color_Product",
+      });
       Product.hasMany(models.Color_Product, { foreignKey: "ProductId" });
       Product.belongsToMany(models.Order, { through: "Order_Product" });
       Product.hasMany(models.Order_Product, { foreignKey: "ProductId" });
@@ -35,7 +37,6 @@ module.exports = (sequelize, DataTypes) => {
       pin: DataTypes.STRING,
       sim: DataTypes.STRING,
       price_base: DataTypes.FLOAT,
-      description: DataTypes.TEXT,
       CategoryId: DataTypes.INTEGER,
     },
     {

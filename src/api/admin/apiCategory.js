@@ -11,7 +11,7 @@ const indexCategory = async (req, res) => {
       page,
     };
     let data_categories = await axios.get(
-      process.env.BASE_URL + `admin/categories/${category_id}`,
+      process.env.BASE_URL + `admin/categories`,
       { params }
     );
     return res.render("admin/category.ejs", {

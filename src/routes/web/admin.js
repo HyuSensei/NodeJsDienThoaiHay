@@ -84,7 +84,7 @@ router.post(
   apiProduct.storeStorageProduct
 );
 //order
-router.get("/orders", apiOrder.indexOrder);
+router.get("/orders", middleware.checkRequireLoginAdmin, apiOrder.indexOrder);
 router.get(
   "/confirm_orders/:order_id",
   middleware.checkRequireLoginAdmin,
@@ -96,7 +96,7 @@ router.get(
   apiOrder.deleteOrder
 );
 //user
-router.get("/users", apiUser.indexUser);
+router.get("/users", middleware.checkRequireLoginAdmin, apiUser.indexUser);
 router.get(
   "/users/update_role/:user_id",
   middleware.checkRequireLoginAdmin,

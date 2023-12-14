@@ -91,6 +91,7 @@ const getProductSearch = async (req, res) => {
     let limit = 8;
     let page = req.query.page;
     let product_name = req.params.product_name;
+    console.log("name:", product_name);
     const offset = (page - 1) * limit;
     const totalProducts = await db.Product.count();
     const totalPages = Math.ceil(totalProducts / limit);
